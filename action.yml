@@ -1,0 +1,89 @@
+name: "GitHub CODEOWNERS Validator"
+description: "GitHub action to ensure the correctness of your CODEOWNERS file."
+author: "szostok.mateusz@gmail.com"
+
+inputs:
+  github_access_token:
+    description: "The GitHub access token. Instruction for creating a token can be found here: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/#creating-a-token. If not provided then validating owners functionality could not work properly, e.g. you can reach the API calls quota or if you are setting GitHub Enterprise base URL then an unauthorized error can occur."
+    required: false
+
+  github_app_id:
+    description: "Github App ID for authentication. This replaces the GITHUB_ACCESS_TOKEN. Instruction for creating a Github App can be found here: https://github.com/mszostok/codeowners-validator/blob/main/docs/gh-token.md"
+    required: false
+
+  github_app_installation_id:
+    description: "Github App Installation ID. Required when GITHUB_APP_ID is set."
+    required: false
+
+  github_app_private_key:
+    description: "Github App private key in PEM format. Required when GITHUB_APP_ID is set."
+    required: false
+
+  github_base_url:
+    description: "The GitHub base URL for API requests. Defaults to the public GitHub API, but can be set to a domain endpoint to use with GitHub Enterprise. Default: https://api.github.com/"
+    required: false
+
+  github_upload_url:
+    description: "The GitHub upload URL for uploading files. It is taken into account only when the GITHUB_BASE_URL is also set. If only the GITHUB_BASE_URL is provided then this parameter defaults to the GITHUB_BASE_URL value. Default: https://uploads.github.com/"
+    required: false
+
+  experimental_checks:
+    description: "The comma-separated list of experimental checks that should be executed. By default, all experimental checks are turned off. Possible values: notowned."
+    default: ""
+    required: false
+
+  checks:
+    description: "The list of checks that will be executed. By default, all checks are executed. Possible values: files,owners,duppatterns,syntax"
+    required: false
+    default: ""
+
+  repository_path:
+    description: "The repository path in which CODEOWNERS file should be validated."
+    required: false
+    default: "."
+
+  check_failure_level:
+    description: "Defines the level on which the application should treat check issues as failures. Defaults to warning, which treats both errors and warnings as failures, and exits with error code 3. Possible values are error and warning. Default: warning"
+    required: false
+
+  not_owned_checker_skip_patterns:
+    description: "The comma-separated list of patterns that should be ignored by not-owned-checker. For example, you can specify * and as a result, the * pattern from the CODEOWNERS file will be ignored and files owned by this pattern will be reported as unowned unless a later specific pattern will match that path. It's useful because often we have default owners entry at the begging of the CODOEWNERS file, e.g. * @global-owner1 @global-owner2"
+    required: false
+
+  owner_checker_repository:
+    description: "The owner and repository name. For example, gh-codeowners/codeowners-samples. Used to check if GitHub team is in the given organization and has permission to the given repository."
+    required: false
+    default: "${{ github.repository }}"
+
+  owner_checker_ignored_owners:
+    description: "The comma-separated list of owners that should not be validated. Example: @owner1,@owner2,@org/team1,example@email.com."
+    required: false
+
+  owner_checker_allow_unowned_patterns:
+    description: "Specifies whether CODEOWNERS may have unowned files. For example, `/infra/oncall-rotator/oncall-config.yml` doesn't have owner and this is not reported."
+    default: "true"
+    required: false
+
+  owner_checker_owners_must_be_teams:
+    description: "Specifies whether only teams are allowed as owners of files."
+    default: "false"
+    required: false
+
+  not_owned_checker_subdirectories:
+    description: "Only check listed subdirectories for CODEOWNERS ownership that don't have owners."
+    required: false
+
+  not_owned_checker_trust_workspace:
+    description: "Specifies whether the repository path should be marked as safe. See: https://github.com/actions/checkout/issues/766"
+    required: false
+    default: "true"
+
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/mszostok/codeowners-validator:v0.7.4'
+  env:
+    ENVS_PREFIX: "INPUT"
+
+branding:
+  icon: "shield"
+  color: "gray-dark"
