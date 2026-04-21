@@ -1,6 +1,10 @@
 name: Auto Cherry-Pick from Upstream
 
 on:
+  workflow_run:
+    workflows: ["Release GitHub Actions"]
+    types:
+      - completed
   workflow_dispatch:
     inputs:
       base_branch:
