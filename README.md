@@ -1,14 +1,10 @@
 [![StepSecurity Maintained Action](https://raw.githubusercontent.com/step-security/maintained-actions-assets/main/assets/maintained-action-banner.png)](https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions)
 
 <br/>
-<br/>
 <p align="center">
   <img alt="logo" src="./docs/assets/logo.png" width="320px"/>
   <p align="center">Ensures the correctness of your CODEOWNERS file.</p>
 </p>
-<br/>
-<br/>
-<br/>
 <br/>
 
 ## Codeowners Validator
@@ -92,8 +88,3 @@ Application exits with different status codes which allow you to easily distingu
 | **2** | The application was closed because the OS sends a termination signal (SIGINT or SIGTERM). |
 | **3** | The CODEOWNERS validation failed - executed checks found some issues.                     |
 
-## Roadmap
-
-The [codeowners-validator roadmap uses GitHub milestones](https://github.com/step-security/codeowners-validator/milestone/1) to track the progress of the project.
-
-They are sorted with priority. First are most important.
