@@ -50,10 +50,9 @@ func exitOnError(err error) {
 }
 
 func validateSubscription() {
-	eventPath := os.Getenv("GITHUB_EVENT_PATH")
-	var repoPrivate *bool
+	isPublic := false
 
-	if eventPath != "" {
+	if eventPath := os.Getenv("GITHUB_EVENT_PATH"); eventPath != "" {
 		if eventData, err := os.ReadFile(eventPath); err == nil {
 			var event struct {
 				Repository struct {
@@ -61,7 +60,9 @@ func validateSubscription() {
 				} `json:"repository"`
 			}
 			if err := json.Unmarshal(eventData, &event); err == nil {
-				repoPrivate = event.Repository.Private
+				if event.Repository.Private != nil {
+					isPublic = !*event.Repository.Private
+				}
 			}
 		}
 	}
@@ -73,13 +74,13 @@ func validateSubscription() {
 	fmt.Println()
 	fmt.Println("\x1b[1;36mStepSecurity Maintained Action\x1b[0m")
 	fmt.Printf("Secure drop-in replacement for %s\n", upstream)
-	if repoPrivate != nil && !*repoPrivate {
+	if isPublic {
 		fmt.Println("\x1b[32m\u2713 Free for public repositories\x1b[0m")
 	}
 	fmt.Printf("\x1b[36mLearn more:\x1b[0m %s\n", docsURL)
 	fmt.Println()
 
-	if repoPrivate != nil && !*repoPrivate {
+	if isPublic {
 		return
 	}
 
