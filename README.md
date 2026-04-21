@@ -1,11 +1,9 @@
 [![StepSecurity Maintained Action](https://raw.githubusercontent.com/step-security/maintained-actions-assets/main/assets/maintained-action-banner.png)](https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions)
 
-<br/>
 <p align="center">
   <img alt="logo" src="./docs/assets/logo.png" width="320px"/>
   <p align="center">Ensures the correctness of your CODEOWNERS file.</p>
 </p>
-<br/>
 
 ## Codeowners Validator
 <a href="/LICENSE"><img alt="Software License" src="https://img.shields.io/badge/license-Apache-brightgreen.svg?style=flat-square"/></a>

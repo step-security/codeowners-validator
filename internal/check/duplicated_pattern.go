@@ -22,7 +22,7 @@ func NewDuplicatedPattern() *DuplicatedPattern {
 func (d *DuplicatedPattern) Check(ctx context.Context, in Input) (Output, error) {
 	var bldr OutputBuilder
 
-	// TODO(mszostok): decide if the `CodeownersEntries` entry by default should be
+	// TODO: decide if the `CodeownersEntries` entry by default should be
 	//  indexed by pattern (`map[string][]codeowners.Entry{}`)
 	//  Required changes in pkg/codeowners/owners.go.
 	patterns := map[string][]codeowners.Entry{}
