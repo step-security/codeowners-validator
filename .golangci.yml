@@ -1,0 +1,41 @@
+issues:
+  exclude:
+    # Check this issue for more info: https://github.com/kyoh86/scopelint/issues/4
+    - Using the variable on range scope `tc` in function literal
+
+run:
+  tests: true
+linters:
+  disable-all: true
+  enable:
+    - gocritic
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+    - revive
+    - gofmt
+    - misspell
+    - gochecknoinits
+    - unparam
+    - exportloopref
+    - gosec
+    - goimports
+    - whitespace
+    - bodyclose
+    - gocyclo
+
+  fast: false
+
+
+linters-settings:
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - style
+      - performance
+      - experimental
+      - opinionated

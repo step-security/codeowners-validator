@@ -1,0 +1,7 @@
+.git
+.github
+docs
+hack
+tests
+bin
+coverage.txt

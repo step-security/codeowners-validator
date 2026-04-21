@@ -1,0 +1,7 @@
+scripts/
+.idea
+codeowners-validator
+dist/
+tmp/
+bin/
+coverage.txt
