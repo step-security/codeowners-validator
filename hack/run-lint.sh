@@ -7,7 +7,7 @@ set -E         # needs to be set if we want the ERR trap
 
 CURRENT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 ROOT_PATH=$(cd "${CURRENT_DIR}/.." && pwd)
-GOLANGCI_LINT_VERSION="v1.55.2"
+GOLANGCI_LINT_VERSION="v2.11.4"
 TMP_DIR=$(mktemp -d)
 
 readonly CURRENT_DIR
@@ -40,9 +40,9 @@ golangci::run_checks() {
 		exit 1
 	fi
 
-	GOT_VER=$(golangci-lint version --format=short 2>&1)
+	GOT_VER=$(golangci-lint version 2>&1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
 	if [[ "v${GOT_VER}" != "${GOLANGCI_LINT_VERSION}" ]]; then
-		echo -e "${RED}✗ golangci-lint version mismatch, expected ${GOLANGCI_LINT_VERSION}, available ${GOT_VER} ${NC}"
+		echo -e "${RED}✗ golangci-lint version mismatch, expected ${GOLANGCI_LINT_VERSION}, available v${GOT_VER} ${NC}"
 		exit 1
 	fi
 
