@@ -14,41 +14,13 @@
 ## Codeowners Validator
 <a href="/LICENSE"><img alt="Software License" src="https://img.shields.io/badge/license-Apache-brightgreen.svg?style=flat-square"/></a>
 <a href="https://goreportcard.com/report/github.com/step-security/codeowners-validator"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/step-security/codeowners-validator?style=flat-square"/></a>
-<a href="https://twitter.com/m_szostok"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/m_szostok?color=a&label=Follow%20%40m_szostok%20for%20updates&style=social"></a>
-
 The Codeowners Validator project validates the GitHub [CODEOWNERS](https://help.github.com/articles/about-code-owners/) file based on [specified checks](#checks). It supports public and private GitHub repositories and also GitHub Enterprise installations.
 
-![usage](./docs/assets/usage.svg)
 
 ## Usage
 
-#### Docker
-
-```bash
-export GH_TOKEN=<your_token>
-docker run --rm -v $(pwd):/repo -w /repo \
-  -e REPOSITORY_PATH="." \
-  -e GITHUB_ACCESS_TOKEN="$GH_TOKEN" \
-  -e EXPERIMENTAL_CHECKS="notowned" \
-  -e OWNER_CHECKER_REPOSITORY="org-name/rep-name" \
-  step-security/codeowners-validator:v0.7.4
-```
-
-#### Command line
-
-```bash
-export GH_TOKEN=<your_token>
-env REPOSITORY_PATH="." \
-    GITHUB_ACCESS_TOKEN="$GH_TOKEN" \
-    EXPERIMENTAL_CHECKS="notowned" \
-    OWNER_CHECKER_REPOSITORY="org-name/rep-name" \
-  codeowners-validator
-```
-
-#### GitHub Action
-
 ```yaml
-- uses: step-security/codeowners-validator@v0.7.4
+- uses: step-security/codeowners-validator@v0
   with:
     checks: "files,owners,duppatterns,syntax"
     experimental_checks: "notowned,avoid-shadowing"
@@ -61,47 +33,6 @@ Check [this](./docs/gh-action.md) document for more information about GitHub Act
 ----
 
 Check the [Configuration](#configuration) section for more info on how to enable and configure given checks.
-
-## Installation
-
-It's highly recommended to install a fixed version of `codeowners-validator`. Releases are available on the [releases page](https://github.com/step-security/codeowners-validator/releases).
-
-### macOS & Linux
-
-`codeowners-validator` is available via [Homebrew](https://brew.sh/index_pl).
-
-#### Homebrew
-
-| Install                                          | Upgrade                                          |
-|--------------------------------------------------|--------------------------------------------------|
-| `brew install mszostok/tap/codeowners-validator` | `brew upgrade mszostok/tap/codeowners-validator` |
-
-#### Install script
-
-```bash
-# binary installed into ./bin/
-curl -sfL https://raw.githubusercontent.com/step-security/codeowners-validator/main/install.sh | sh -s v0.7.4
-
-# binary installed into $(go env GOPATH)/bin/codeowners-validator
-curl -sfL https://raw.githubusercontent.com/step-security/codeowners-validator/main/install.sh | sh -s -- -b $(go env GOPATH)/bin v0.7.4
-
-# In alpine linux (as it does not come with curl by default)
-wget -O - -q https://raw.githubusercontent.com/step-security/codeowners-validator/main/install.sh | sh -s v0.7.4
-
-# Print version. Add `--oshort` to print just the version number.
-codeowners-validator version
-```
-
-You can also download [latest version](https://github.com/step-security/codeowners-validator/releases/latest) from release page manually.
-
-#### From Sources
-
-<!--- You can install `codeowners-validator` with `go install go.szostok.io/codeowners-validator@v0.7.5`. --->
-You can install `codeowners-validator` with `go install github.com/step-security/codeowners-validator@v0.7.4`.
-
-> NOTE: please use Go 1.16 or greater.
-
-This will put `codeowners-validator` in `$(go env GOPATH)/bin`.
 
 ## Checks
 
@@ -160,10 +91,6 @@ Application exits with different status codes which allow you to easily distingu
 | **1** | The application startup failed due to the wrong configuration or internal error.          |
 | **2** | The application was closed because the OS sends a termination signal (SIGINT or SIGTERM). |
 | **3** | The CODEOWNERS validation failed - executed checks found some issues.                     |
-
-## Contributing
-
-Contributions are greatly appreciated! The project follows the typical GitHub pull request model. See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 ## Roadmap
 

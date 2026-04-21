@@ -1,4 +1,4 @@
-module go.szostok.io/codeowners-validator
+module github.com/step-security/codeowners-validator
 
 go 1.21
 

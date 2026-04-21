@@ -187,7 +187,8 @@ func TestCheckSuccess(t *testing.T) {
 // to the golden file.
 //
 // To update golden file, run:
-//   TEST=TestCheckFailures UPDATE_GOLDEN=true make test-integration
+//
+//	TEST=TestCheckFailures UPDATE_GOLDEN=true make test-integration
 func TestCheckFailures(t *testing.T) {
 	type Envs map[string]string
 	tests := []struct {
@@ -274,7 +275,8 @@ func TestCheckFailures(t *testing.T) {
 }
 
 // To update golden file, run:
-//  TEST=TestOwnerCheckAuthZAndAuthN TOKEN_WITH_NO_SCOPES=<token_with_no_scopes> UPDATE_GOLDEN=true make test-integration
+//
+//	TEST=TestOwnerCheckAuthZAndAuthN TOKEN_WITH_NO_SCOPES=<token_with_no_scopes> UPDATE_GOLDEN=true make test-integration
 func TestOwnerCheckAuthZAndAuthN(t *testing.T) {
 	t.Parallel()
 

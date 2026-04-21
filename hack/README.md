@@ -1,6 +1,6 @@
 # Hack directory
 
-This package contains various scripts that are used by Codeowners Validator developers.
+This package contains various scripts that are used by Codeowners Validator developer.
 
 ## Purpose
 

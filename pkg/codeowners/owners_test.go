@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/spf13/afero"
+	"github.com/step-security/codeowners-validator/pkg/codeowners"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"go.szostok.io/codeowners-validator/pkg/codeowners"
 )
 
 const sampleCodeownerFile = `

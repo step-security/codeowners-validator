@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"go.szostok.io/codeowners-validator/internal/check"
-	"go.szostok.io/codeowners-validator/internal/ptr"
+	"github.com/step-security/codeowners-validator/internal/check"
+	"github.com/step-security/codeowners-validator/internal/ptr"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

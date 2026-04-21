@@ -1,21 +1,26 @@
 package main
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
+	"fmt"
+	"net/http"
 	"os"
 	"os/signal"
 	"path/filepath"
 	"syscall"
+	"time"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"go.szostok.io/version/extension"
 
-	"go.szostok.io/codeowners-validator/internal/check"
-	"go.szostok.io/codeowners-validator/internal/envconfig"
-	"go.szostok.io/codeowners-validator/internal/load"
-	"go.szostok.io/codeowners-validator/internal/runner"
-	"go.szostok.io/codeowners-validator/pkg/codeowners"
+	"github.com/step-security/codeowners-validator/internal/check"
+	"github.com/step-security/codeowners-validator/internal/envconfig"
+	"github.com/step-security/codeowners-validator/internal/load"
+	"github.com/step-security/codeowners-validator/internal/runner"
+	"github.com/step-security/codeowners-validator/pkg/codeowners"
 )
 
 // Config holds the application configuration
@@ -44,6 +49,75 @@ func exitOnError(err error) {
 	}
 }
 
+func validateSubscription() {
+	eventPath := os.Getenv("GITHUB_EVENT_PATH")
+	var repoPrivate *bool
+
+	if eventPath != "" {
+		if eventData, err := os.ReadFile(eventPath); err == nil {
+			var event struct {
+				Repository struct {
+					Private *bool `json:"private"`
+				} `json:"repository"`
+			}
+			if err := json.Unmarshal(eventData, &event); err == nil {
+				repoPrivate = event.Repository.Private
+			}
+		}
+	}
+
+	upstream := "mszostok/codeowners-validator"
+	action := os.Getenv("GITHUB_ACTION_REPOSITORY")
+	docsURL := "https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions"
+
+	fmt.Println()
+	fmt.Println("\x1b[1;36mStepSecurity Maintained Action\x1b[0m")
+	fmt.Printf("Secure drop-in replacement for %s\n", upstream)
+	if repoPrivate != nil && !*repoPrivate {
+		fmt.Println("\x1b[32m\u2713 Free for public repositories\x1b[0m")
+	}
+	fmt.Printf("\x1b[36mLearn more:\x1b[0m %s\n", docsURL)
+	fmt.Println()
+
+	if repoPrivate != nil && !*repoPrivate {
+		return
+	}
+
+	serverURL := os.Getenv("GITHUB_SERVER_URL")
+	if serverURL == "" {
+		serverURL = "https://github.com"
+	}
+
+	body := map[string]string{"action": action}
+	if serverURL != "https://github.com" {
+		body["ghes_server"] = serverURL
+	}
+
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		fmt.Println("Timeout or API not reachable. Continuing to next step.")
+		return
+	}
+
+	apiURL := fmt.Sprintf("https://agent.api.stepsecurity.io/v1/github/%s/actions/maintained-actions-subscription", os.Getenv("GITHUB_REPOSITORY"))
+
+	client := &http.Client{Timeout: 3 * time.Second}
+	resp, err := client.Post(apiURL, "application/json", bytes.NewBuffer(jsonBody))
+	if err != nil {
+		fmt.Println("Timeout or API not reachable. Continuing to next step.")
+		return
+	}
+
+	statusCode := resp.StatusCode
+	resp.Body.Close()
+
+	if statusCode == http.StatusForbidden {
+		fmt.Printf("::error::\x1b[1;31mThis action requires a StepSecurity subscription for private repositories.\x1b[0m\n")
+		fmt.Printf("::error::\x1b[31mLearn how to enable a subscription: %s\x1b[0m\n", docsURL)
+		os.Exit(1)
+	}
+}
+
 // WithStopContext returns a copy of parent with a new Done channel. The returned
 // context's Done channel is closed on of SIGINT or SIGTERM signals.
 func WithStopContext(parent context.Context) (context.Context, context.CancelFunc) {
@@ -69,6 +143,8 @@ func NewRoot() *cobra.Command {
 		Short:        "Ensures the correctness of your CODEOWNERS file.",
 		SilenceUsage: true,
 		Run: func(cmd *cobra.Command, args []string) {
+			validateSubscription()
+
 			var cfg Config
 			err := envconfig.Init(&cfg)
 			exitOnError(err)

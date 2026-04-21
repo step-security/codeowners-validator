@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"go.szostok.io/codeowners-validator/internal/check"
+	"github.com/step-security/codeowners-validator/internal/check"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

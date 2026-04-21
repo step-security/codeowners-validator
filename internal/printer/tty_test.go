@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"go.szostok.io/codeowners-validator/internal/check"
-	"go.szostok.io/codeowners-validator/internal/ptr"
+	"github.com/step-security/codeowners-validator/internal/check"
+	"github.com/step-security/codeowners-validator/internal/ptr"
 
 	"github.com/sebdah/goldie/v2"
 )

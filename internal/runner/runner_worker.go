@@ -5,9 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"go.szostok.io/codeowners-validator/internal/check"
-	"go.szostok.io/codeowners-validator/internal/printer"
-	"go.szostok.io/codeowners-validator/pkg/codeowners"
+	"github.com/step-security/codeowners-validator/internal/check"
+	"github.com/step-security/codeowners-validator/internal/printer"
+	"github.com/step-security/codeowners-validator/pkg/codeowners"
 
 	"github.com/sirupsen/logrus"
 )

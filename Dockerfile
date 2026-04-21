@@ -1,19 +1,23 @@
-# Get latest CA certs & git
-FROM alpine:3.19 as deps
+FROM golang:1.21-alpine AS builder
 
 # hadolint ignore=DL3018
 RUN apk --no-cache add ca-certificates git
 
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -o /codeowners-validator .
+
 FROM scratch
 
-LABEL org.opencontainers.image.source=https://github.com/mszostok/codeowners-validator
+LABEL org.opencontainers.image.source=https://github.com/step-security/codeowners-validator
 
-COPY ./codeowners-validator /codeowners-validator
-
-COPY --from=deps /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-COPY --from=deps /usr/bin/git /usr/bin/git
-COPY --from=deps /usr/bin/xargs  /usr/bin/xargs
-COPY --from=deps /lib /lib
-COPY --from=deps /usr/lib /usr/lib
+COPY --from=builder /codeowners-validator /codeowners-validator
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=builder /usr/bin/git /usr/bin/git
+COPY --from=builder /usr/bin/xargs /usr/bin/xargs
+COPY --from=builder /lib /lib
+COPY --from=builder /usr/lib /usr/lib
 
 ENTRYPOINT ["/codeowners-validator"]

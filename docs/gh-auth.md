@@ -57,7 +57,7 @@ Here are the steps to create a GitHub App and use it for this tool:
 
       ```yaml
       - name: GitHub CODEOWNERS Validator
-        uses: mszostok/codeowners-validator@v0.7.4
+        uses: step-security/codeowners-validator@v0
         with:
           # ...
           github_app_id: ${{ secrets.APP_ID }}

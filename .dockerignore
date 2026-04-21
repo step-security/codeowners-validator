@@ -1,5 +1,7 @@
-# Ignore everything
-**
-
-# Allow binary
-!/codeowners-validator
+.git
+.github
+docs
+hack
+tests
+bin
+coverage.txt
