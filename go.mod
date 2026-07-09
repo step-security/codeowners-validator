@@ -16,7 +16,7 @@ require (
 	github.com/spf13/afero v1.11.0
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.10.0
-	github.com/vrischmann/envconfig v1.3.0
+	github.com/vrischmann/envconfig v1.4.1
 	go.szostok.io/version v1.2.0
 	golang.org/x/crypto v0.50.0 // indirect
 	golang.org/x/oauth2 v0.36.0
