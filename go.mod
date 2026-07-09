@@ -14,7 +14,7 @@ require (
 	github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3 // indirect
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/afero v1.11.0
-	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/pflag v1.0.9 // indirect
 	github.com/stretchr/testify v1.10.0
 	github.com/vrischmann/envconfig v1.3.0
 	go.szostok.io/version v1.2.0
@@ -27,7 +27,7 @@ require (
 
 require (
 	github.com/go-git/go-git/v5 v5.18.0
-	github.com/spf13/cobra v1.8.0
+	github.com/spf13/cobra v1.10.2
 )
 
 require (
