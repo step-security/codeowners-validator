@@ -18,9 +18,9 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/vrischmann/envconfig v1.3.0
 	go.szostok.io/version v1.2.0
-	golang.org/x/crypto v0.50.0 // indirect
+	golang.org/x/crypto v0.52.0 // indirect
 	golang.org/x/oauth2 v0.36.0
-	golang.org/x/sys v0.43.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
 	gopkg.in/pipe.v2 v2.0.0-20140414041502-3c2ca4d52544
 	gotest.tools v2.2.0+incompatible
 )
@@ -74,8 +74,8 @@ require (
 	github.com/skeema/knownhosts v1.3.1 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	golang.org/x/net v0.53.0 // indirect
-	golang.org/x/text v0.36.0 // indirect
+	golang.org/x/net v0.54.0 // indirect
+	golang.org/x/text v0.37.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
